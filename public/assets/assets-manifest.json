@@ -1,0 +1,38 @@
+{
+  "backgrounds": {
+    "paddyDawnWide": "/assets/backgrounds/paddy-dawn-wide.webp",
+    "scrapbookDeskOrigin": "/assets/backgrounds/scrapbook-desk-origin.webp",
+    "siliconValleyDusk": "/assets/backgrounds/silicon-valley-dusk.webp",
+    "crashRoomDark": "/assets/backgrounds/crash-room-dark.webp",
+    "zohoSchoolsClassroom": "/assets/backgrounds/zoho-schools-classroom.webp",
+    "mathalamparaiSunrise": "/assets/backgrounds/mathalamparai-sunrise.webp",
+    "introVideo": "/assets/backgrounds/background.mp4",
+    "zohoEcosystemGenerated": "/assets/backgrounds/zoho-ecosystem-generated.webp",
+    "returnJourneyGenerated": "/assets/backgrounds/return-journey-generated.webp",
+    "choiceDecisionGenerated": "/assets/backgrounds/choice-decision-generated.webp",
+    "buildNotBuyGenerated": "/assets/backgrounds/build-not-buy-generated.webp",
+    "philosophyNotebookGenerated": "/assets/backgrounds/philosophy-notebook-generated.webp",
+    "mathLedgerGenerated": "/assets/backgrounds/math-ledger-generated.webp"
+  },
+  "cutouts": {
+    "sridharPorch": "/assets/cutouts/sridhar-porch-cutout.png",
+    "sridharBicycle": "/assets/cutouts/sridhar-bicycle-cutout.png",
+    "youngSridharBooth": "/assets/cutouts/young-sridhar-booth-cutout.png",
+    "studentsLaptops": "/assets/cutouts/students-laptops-cutout.png"
+  },
+  "objects": {
+    "vcTermSheets": "/assets/objects/vc-term-sheets-cutout.png",
+    "boardingPass": "/assets/objects/boarding-pass-collage.png",
+    "crtRevenueCrash": "/assets/objects/crt-revenue-crash.png",
+    "diplomaLeaves": "/assets/objects/diploma-leaves.png",
+    "iitRankPaper": "/assets/objects/iit-rank-paper.png"
+  },
+  "textures": {
+    "rootsFiberGlow": "/assets/textures/roots-fiber-glow.png"
+  },
+  "seo": {
+    "brokaiLabsMark": "/assets/seo/brokai-labs-mark.svg",
+    "openGraphImage": "/assets/seo/sridhar-vembu-tribute-og.svg"
+  },
+  "generatedStrategy": "Curated production set using existing generated cinematic assets reorganized into semantic folders, with smaller route, icon, constellation, map, grain, paper, root, ledger, and firefly details rendered in SVG/CSS for performance."
+}

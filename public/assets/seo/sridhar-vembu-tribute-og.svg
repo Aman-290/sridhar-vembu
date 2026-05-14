@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07101E"/>
+      <stop offset="0.48" stop-color="#1A0F00"/>
+      <stop offset="1" stop-color="#2D5A27"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="72%" cy="38%" r="42%">
+      <stop offset="0" stop-color="#FF9966" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#FF9966" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <rect width="1200" height="630" fill="url(#sun)"/>
+  <path d="M0 430c160-44 276-34 405 10 157 54 300 34 446-18 138-49 248-45 349-4v212H0Z" fill="#173014"/>
+  <path d="M0 500c170-23 350-18 540 22 244 51 444 32 660-22v130H0Z" fill="#0D1E0D" opacity=".86"/>
+  <g stroke="#C9A84C" stroke-opacity=".26" stroke-width="2">
+    <path d="M58 631 318 418"/>
+    <path d="M185 631 411 424"/>
+    <path d="M318 631 505 438"/>
+    <path d="M482 631 625 456"/>
+    <path d="M671 631 759 455"/>
+    <path d="M858 631 889 440"/>
+    <path d="M1024 631 1008 432"/>
+  </g>
+  <text x="88" y="130" fill="#C9A84C" font-family="monospace" font-size="30" font-weight="700" letter-spacing="8">BROKAI LABS PRESENTS</text>
+  <text x="84" y="278" fill="#FFF8E4" font-family="Georgia, serif" font-size="92" font-weight="700">Sridhar Vembu</text>
+  <text x="88" y="366" fill="#FFF8E4" font-family="Georgia, serif" font-size="64" font-weight="700">The Man Who Walked Back</text>
+  <text x="92" y="440" fill="#FFB47D" font-family="monospace" font-size="26" font-weight="700">Zoho. Rural Tamil Nadu. Patience as strategy.</text>
+  <circle cx="1026" cy="128" r="58" fill="none" stroke="#C9A84C" stroke-width="5"/>
+  <circle cx="1026" cy="128" r="12" fill="#C9A84C"/>
+</svg>
