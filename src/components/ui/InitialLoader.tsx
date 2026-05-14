@@ -16,7 +16,7 @@ const loadImage = (src: string) =>
 const loadVideo = (src: string) =>
   new Promise<void>((resolve) => {
     const video = document.createElement('video')
-    const timeout = window.setTimeout(resolve, 4200)
+    const timeout = window.setTimeout(resolve, 12000)
     const done = () => {
       window.clearTimeout(timeout)
       resolve()
@@ -28,6 +28,54 @@ const loadVideo = (src: string) =>
     video.onerror = done
     video.src = src
     video.load()
+  })
+
+const waitForHeroVideoPlayback = () =>
+  new Promise<void>((resolve) => {
+    const video = document.querySelector<HTMLVideoElement>('.intro-video')
+    if (!video) {
+      resolve()
+      return
+    }
+
+    let settled = false
+    const cleanup = () => {
+      video.removeEventListener('playing', check)
+      video.removeEventListener('canplay', check)
+      video.removeEventListener('canplaythrough', check)
+      video.removeEventListener('timeupdate', check)
+      video.removeEventListener('error', done)
+    }
+    const done = () => {
+      if (settled) return
+      settled = true
+      window.clearTimeout(timeout)
+      cleanup()
+      resolve()
+    }
+    const hasBufferedPlayback = () => video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA && !video.paused && !video.ended
+    const check = () => {
+      if (hasBufferedPlayback()) done()
+    }
+    const timeout = window.setTimeout(done, 18000)
+
+    video.preload = 'auto'
+    video.muted = true
+    video.playsInline = true
+    video.addEventListener('playing', check)
+    video.addEventListener('canplay', check)
+    video.addEventListener('canplaythrough', check)
+    video.addEventListener('timeupdate', check)
+    video.addEventListener('error', done)
+
+    video.load()
+    const play = video.play()
+    if (play) {
+      play.then(check).catch(() => {
+        if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) done()
+      })
+    }
+    check()
   })
 
 export default function InitialLoader({ onDone }: InitialLoaderProps) {
@@ -58,6 +106,7 @@ export default function InitialLoader({ onDone }: InitialLoaderProps) {
           }),
         ),
       ])
+      await waitForHeroVideoPlayback()
 
       if (!cancelled) {
         setProgress(100)
