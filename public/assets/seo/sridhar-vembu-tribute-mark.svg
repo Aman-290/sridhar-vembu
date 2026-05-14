@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Sridhar Vembu tribute mark">
+  <defs>
+    <radialGradient id="dawn" cx="70%" cy="28%" r="68%">
+      <stop offset="0" stop-color="#FF9966"/>
+      <stop offset="0.38" stop-color="#C9A84C"/>
+      <stop offset="1" stop-color="#1A0F00"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="#1A0F00"/>
+  <circle cx="256" cy="256" r="188" fill="url(#dawn)" opacity=".92"/>
+  <path d="M78 342c62-24 124-26 186-7 72 22 124 13 170-11v106H78Z" fill="#2D5A27"/>
+  <path d="M78 386c57-11 116-7 176 13 73 24 134 20 180 0v31H78Z" fill="#173014"/>
+  <g stroke="#F0EBE0" stroke-opacity=".38" stroke-width="3">
+    <path d="M113 430 214 318"/>
+    <path d="M176 430 249 323"/>
+    <path d="M241 430 286 327"/>
+    <path d="M308 430 324 331"/>
+    <path d="M373 430 359 331"/>
+  </g>
+  <circle cx="349" cy="154" r="46" fill="#FFF4D8" opacity=".92"/>
+  <path d="M154 267c18 25 52 39 92 39 49 0 81-21 81-56 0-31-23-47-72-60l-22-6c-30-8-42-16-42-32 0-18 18-29 44-29 29 0 49 12 61 34l37-25c-19-34-52-52-97-52-50 0-85 28-85 70 0 37 25 57 78 70l23 6c25 6 35 14 35 27 0 16-17 24-44 24-32 0-56-13-72-37Z" fill="#11100D"/>
+  <path d="M150 252c18 25 52 39 92 39 49 0 81-21 81-56 0-31-23-47-72-60l-22-6c-30-8-42-16-42-32 0-18 18-29 44-29 29 0 49 12 61 34l37-25c-19-34-52-52-97-52-50 0-85 28-85 70 0 37 25 57 78 70l23 6c25 6 35 14 35 27 0 16-17 24-44 24-32 0-56-13-72-37Z" fill="#F0EBE0"/>
+  <path d="M105 272c46 39 101 57 163 52 54-4 99-23 139-57" fill="none" stroke="#C9A84C" stroke-width="12" stroke-linecap="round"/>
+  <path d="M397 248c-4 29-7 57-11 86-18-21-37-42-55-63" fill="none" stroke="#C9A84C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -48,7 +48,7 @@ const verticalLiftByScene: Record<string, { copy: number; visual: number }> = {
   math: { copy: 120, visual: 220 },
 }
 
-const transitionModes = ['rise', 'horizontal', 'diagonal', 'fade', 'drop', 'horizontal', 'rise', 'diagonal', 'fade', 'rise', 'diagonal', 'fade', 'drop', 'horizontal'] as const
+const transitionModes = ['fade', 'horizontal', 'diagonal', 'fade', 'drop', 'horizontal', 'rise', 'diagonal', 'fade', 'rise', 'diagonal', 'fade', 'drop', 'horizontal'] as const
 type TransitionMode = (typeof transitionModes)[number]
 
 const panelTransform = (mode: TransitionMode, role: 'current' | 'next', progress: number) => {
@@ -150,7 +150,7 @@ function App() {
         ).filter((piece) => piece.dataset.fixedVisual !== 'true')
 
         if (active) {
-          panel.style.opacity = mode === 'fade' ? String(1 - transitionProgress * 0.5) : '1'
+          panel.style.opacity = mode === 'fade' ? String(1 - transitionProgress) : '1'
           panel.style.pointerEvents = 'auto'
           panel.style.zIndex = '3'
           panel.style.transform = panelTransform(mode, 'current', transitionProgress)

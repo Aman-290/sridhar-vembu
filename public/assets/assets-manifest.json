@@ -32,6 +32,7 @@
   },
   "seo": {
     "brokaiLabsMark": "/assets/seo/brokai-labs-mark.svg",
+    "sridharVembuTributeMark": "/assets/seo/sridhar-vembu-tribute-mark.svg",
     "openGraphImage": "/assets/seo/sridhar-vembu-tribute-og.svg"
   },
   "generatedStrategy": "Curated production set using existing generated cinematic assets reorganized into semantic folders, with smaller route, icon, constellation, map, grain, paper, root, ledger, and firefly details rendered in SVG/CSS for performance."
