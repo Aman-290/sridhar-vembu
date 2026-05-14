@@ -41,12 +41,32 @@ const sections = [
 ]
 
 const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value))
-const verticalReadScenes = new Set(['schools', 'philosophy', 'complicated', 'math'])
+const verticalReadScenes = new Set(['schools', 'philosophy', 'math'])
 const verticalLiftByScene: Record<string, { copy: number; visual: number }> = {
   schools: { copy: 130, visual: 260 },
-  philosophy: { copy: 125, visual: 290 },
-  complicated: { copy: 130, visual: 250 },
+  philosophy: { copy: 145, visual: 260 },
   math: { copy: 120, visual: 220 },
+}
+
+const transitionModes = ['rise', 'horizontal', 'diagonal', 'fade', 'drop', 'horizontal', 'rise', 'diagonal', 'fade', 'rise', 'diagonal', 'fade', 'drop', 'horizontal'] as const
+type TransitionMode = (typeof transitionModes)[number]
+
+const panelTransform = (mode: TransitionMode, role: 'current' | 'next', progress: number) => {
+  const p = clamp(progress)
+  if (role === 'next') {
+    const distance = 1 - p
+    if (mode === 'rise') return `translate3d(0, ${distance * 100}vh, 0)`
+    if (mode === 'drop') return `translate3d(0, ${distance * -100}vh, 0)`
+    if (mode === 'diagonal') return `translate3d(${distance * 58}vw, ${distance * 44}vh, 0)`
+    if (mode === 'fade') return `translate3d(0, 0, 0) scale(${0.96 + p * 0.04})`
+    return `translate3d(${distance * 100}vw, 0, 0)`
+  }
+
+  if (mode === 'rise') return `translate3d(0, ${p * -24}vh, 0) scale(${1 - p * 0.025})`
+  if (mode === 'drop') return `translate3d(0, ${p * 24}vh, 0) scale(${1 - p * 0.025})`
+  if (mode === 'diagonal') return `translate3d(${p * -22}vw, ${p * -16}vh, 0) scale(${1 - p * 0.025})`
+  if (mode === 'fade') return `translate3d(0, 0, 0) scale(${1 - p * 0.035})`
+  return `translate3d(${p * -34}vw, 0, 0) scale(${1 - p * 0.02})`
 }
 
 function App() {
@@ -105,17 +125,17 @@ function App() {
       const raw = window.scrollY / segment
       const index = Math.min(maxIndex, Math.floor(raw))
       const local = clamp(raw - index)
-      const width = window.innerWidth
       const transitionStart = index === 0 ? 0 : 0.74
       const transitionProgress = index === maxIndex ? 0 : clamp((local - transitionStart) / (1 - transitionStart))
-      const x = index === 0 ? -local * width : -(index + transitionProgress) * width
+      const mode = transitionModes[index % transitionModes.length]
 
       activePanel = panels[index] ?? null
-      track.style.transform = `translate3d(${x}px, 0, 0)`
+      track.style.transform = ''
 
       panels.forEach((panel, panelIndex) => {
         const active = panelIndex === index
         const past = panelIndex < index
+        const incoming = panelIndex === index + 1 && transitionProgress > 0
         const panelProgress = active ? local : past ? 1 : 0
         const sceneId = panel.dataset.scene ?? ''
         const needsVerticalRead = verticalReadScenes.has(sceneId)
@@ -125,9 +145,26 @@ function App() {
         )
         const visualPieces = Array.from(
           panel.querySelectorAll<HTMLElement>(
-            '.cutout, .year-slider-panel, .choice-board, .choice-outcome, .ledger-page, .newspaper-columns, .constellation, .booth-facts, .paper-rank, .rank-monument, .origin-map, .airplane-window, .boarding-pass, .ocean-route, .crt-monitor, .term-sheets, .crash-graph, .data-cards, .belief-board, .seed-clock, .firefly-wall, .site-footer, .zoho-proof-cards, .zoho-mark, .return-route, .return-bike, .return-stamps, .return-note, .return-compass, .build-system-board, .craft-seal, .system-principles',
+            '.cutout, .year-slider-panel, .choice-board, .choice-outcome, .ledger-page, .newspaper-columns, .constellation, .booth-facts, .paper-rank, .rank-monument, .origin-map, .airplane-window, .boarding-pass, .ocean-route, .crt-monitor, .term-sheets, .crash-graph, .data-cards, .belief-board, .philosophy-visual, .seed-clock, .firefly-wall, .site-footer, .zoho-proof-cards, .zoho-mark, .return-route, .return-bike, .return-stamps, .return-note, .return-compass, .build-system-board, .craft-seal, .system-principles',
           ),
         ).filter((piece) => piece.dataset.fixedVisual !== 'true')
+
+        if (active) {
+          panel.style.opacity = mode === 'fade' ? String(1 - transitionProgress * 0.5) : '1'
+          panel.style.pointerEvents = 'auto'
+          panel.style.zIndex = '3'
+          panel.style.transform = panelTransform(mode, 'current', transitionProgress)
+        } else if (incoming) {
+          panel.style.opacity = mode === 'fade' ? String(transitionProgress) : '1'
+          panel.style.pointerEvents = 'none'
+          panel.style.zIndex = '4'
+          panel.style.transform = panelTransform(mode, 'next', transitionProgress)
+        } else {
+          panel.style.opacity = '0'
+          panel.style.pointerEvents = 'none'
+          panel.style.zIndex = '1'
+          panel.style.transform = 'translate3d(0, 0, 0)'
+        }
 
         if (panelIndex === 0) {
           copyPieces.forEach((piece) => {
@@ -182,7 +219,7 @@ function App() {
   }, [reducedMotion])
 
   return (
-    <main ref={rootRef} className="site-shell">
+    <main ref={rootRef} className={reducedMotion ? 'site-shell is-reduced' : 'site-shell'}>
       <InitialLoader />
       <ScrollProgress />
       <CustomCursor />
