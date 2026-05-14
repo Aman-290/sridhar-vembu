@@ -50,23 +50,27 @@ const verticalLiftByScene: Record<string, { copy: number; visual: number }> = {
 
 const transitionModes = ['fade', 'horizontal', 'diagonal', 'fade', 'drop', 'horizontal', 'rise', 'diagonal', 'fade', 'rise', 'diagonal', 'fade', 'drop', 'horizontal'] as const
 type TransitionMode = (typeof transitionModes)[number]
+const easeTransition = (value: number) => {
+  const p = clamp(value)
+  return p * p * (3 - 2 * p)
+}
 
 const panelTransform = (mode: TransitionMode, role: 'current' | 'next', progress: number) => {
-  const p = clamp(progress)
+  const p = easeTransition(progress)
   if (role === 'next') {
     const distance = 1 - p
-    if (mode === 'rise') return `translate3d(0, ${distance * 100}vh, 0)`
-    if (mode === 'drop') return `translate3d(0, ${distance * -100}vh, 0)`
-    if (mode === 'diagonal') return `translate3d(${distance * 58}vw, ${distance * 44}vh, 0)`
-    if (mode === 'fade') return `translate3d(0, 0, 0) scale(${0.96 + p * 0.04})`
-    return `translate3d(${distance * 100}vw, 0, 0)`
+    if (mode === 'rise') return `translate3d(0, ${distance * 72}vh, 0) scale(${0.985 + p * 0.015})`
+    if (mode === 'drop') return `translate3d(0, ${distance * -72}vh, 0) scale(${0.985 + p * 0.015})`
+    if (mode === 'diagonal') return `translate3d(${distance * 44}vw, ${distance * 30}vh, 0) scale(${0.985 + p * 0.015})`
+    if (mode === 'fade') return `translate3d(0, 0, 0) scale(${0.975 + p * 0.025})`
+    return `translate3d(${distance * 74}vw, 0, 0) scale(${0.985 + p * 0.015})`
   }
 
-  if (mode === 'rise') return `translate3d(0, ${p * -24}vh, 0) scale(${1 - p * 0.025})`
-  if (mode === 'drop') return `translate3d(0, ${p * 24}vh, 0) scale(${1 - p * 0.025})`
-  if (mode === 'diagonal') return `translate3d(${p * -22}vw, ${p * -16}vh, 0) scale(${1 - p * 0.025})`
-  if (mode === 'fade') return `translate3d(0, 0, 0) scale(${1 - p * 0.035})`
-  return `translate3d(${p * -34}vw, 0, 0) scale(${1 - p * 0.02})`
+  if (mode === 'rise') return `translate3d(0, ${p * -12}vh, 0) scale(${1 - p * 0.018})`
+  if (mode === 'drop') return `translate3d(0, ${p * 12}vh, 0) scale(${1 - p * 0.018})`
+  if (mode === 'diagonal') return `translate3d(${p * -12}vw, ${p * -8}vh, 0) scale(${1 - p * 0.018})`
+  if (mode === 'fade') return `translate3d(0, 0, 0) scale(${1 - p * 0.025})`
+  return `translate3d(${p * -16}vw, 0, 0) scale(${1 - p * 0.016})`
 }
 
 function App() {
@@ -125,8 +129,9 @@ function App() {
       const raw = window.scrollY / segment
       const index = Math.min(maxIndex, Math.floor(raw))
       const local = clamp(raw - index)
-      const transitionStart = index === 0 ? 0 : 0.74
-      const transitionProgress = index === maxIndex ? 0 : clamp((local - transitionStart) / (1 - transitionStart))
+      const transitionStart = index === 0 ? 0 : 0.58
+      const transitionProgressRaw = index === maxIndex ? 0 : clamp((local - transitionStart) / (1 - transitionStart))
+      const transitionProgress = easeTransition(transitionProgressRaw)
       const mode = transitionModes[index % transitionModes.length]
 
       activePanel = panels[index] ?? null
@@ -150,15 +155,15 @@ function App() {
         ).filter((piece) => piece.dataset.fixedVisual !== 'true')
 
         if (active) {
-          panel.style.opacity = mode === 'fade' ? String(1 - transitionProgress) : '1'
+          panel.style.opacity = mode === 'fade' ? String(1 - transitionProgress) : String(1 - transitionProgress * 0.42)
           panel.style.pointerEvents = 'auto'
           panel.style.zIndex = '3'
-          panel.style.transform = panelTransform(mode, 'current', transitionProgress)
+          panel.style.transform = panelTransform(mode, 'current', transitionProgressRaw)
         } else if (incoming) {
-          panel.style.opacity = mode === 'fade' ? String(transitionProgress) : '1'
+          panel.style.opacity = mode === 'fade' ? String(transitionProgress) : String(0.12 + transitionProgress * 0.88)
           panel.style.pointerEvents = 'none'
           panel.style.zIndex = '4'
-          panel.style.transform = panelTransform(mode, 'next', transitionProgress)
+          panel.style.transform = panelTransform(mode, 'next', transitionProgressRaw)
         } else {
           panel.style.opacity = '0'
           panel.style.pointerEvents = 'none'
